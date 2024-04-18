@@ -25,6 +25,10 @@ dependencies {
     testImplementation 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework:spring-context'
+    testImplementation 'org.springframework:spring-context'
+    testImplementation 'junit:junit:4.13.1'
+
 
 }
 
