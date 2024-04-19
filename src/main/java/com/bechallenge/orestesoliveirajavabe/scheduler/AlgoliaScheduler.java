@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class AlgoliaScheduler {
 
-    private static final String ALGOLIA_API_URL = "https://api.algolia.com";
+    public static final String ALGOLIA_API_URL = "https://api.algolia.com";
 
     private final RestTemplate restTemplate;
 
@@ -16,10 +16,10 @@ public class AlgoliaScheduler {
     }
 
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void fetchDataFromAlgolia() {
         String algoliaData = restTemplate.getForObject(ALGOLIA_API_URL, String.class);
-
+        System.out.println("CRON RUNNING");
         processAndInsertData(algoliaData);
     }
 

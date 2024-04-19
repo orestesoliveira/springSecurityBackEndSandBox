@@ -29,6 +29,15 @@ dependencies {
     testImplementation 'org.springframework:spring-context'
     testImplementation 'junit:junit:4.13.1'
 
+    implementation 'org.springframework.security:spring-security-bom:5.3.5.RELEASE'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
 }
 

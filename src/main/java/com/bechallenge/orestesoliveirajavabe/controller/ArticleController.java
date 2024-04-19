@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/articles")
@@ -38,6 +39,21 @@ public class ArticleController {
     @DeleteMapping("/{id}")
     public void deleteArticle(@PathVariable Long id) {
         articleService.deleteArticle(id);
+    }
+
+    @GetMapping("/{id}")
+    public Article getArticleById(@PathVariable Long id) {
+        return articleService.getArticleById(id);
+    }
+
+    @PostMapping
+    public void createArticle(@RequestBody Article article) {
+        articleService.createArticle(article);
+    }
+
+    @PutMapping("/{id}")
+    public void updateArticle(@PathVariable Long id, @RequestBody Article article) {
+        articleService.updateArticle(id, article);
     }
 
 }

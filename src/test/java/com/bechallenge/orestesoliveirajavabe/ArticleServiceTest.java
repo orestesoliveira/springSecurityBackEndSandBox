@@ -12,9 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import java.util.Collections;
-
+import java.util.Optional;
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -30,16 +30,53 @@ public class ArticleServiceTest {
 
     @Test
     public void testGetPaginatedArticles() {
-        // Mock the behavior of the repository method
         when(articleRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(Collections.emptyList()));
-
-        // Perform the service method invocation
         Page<Article> result = articleService.getPaginatedArticles(PageRequest.of(0, 5));
-
-        // Verify the result
         assertNotNull(result);
         assertEquals(0, result.getContent().size());
     }
 
-    // Additional service tests for other methods can be added here
+
+
+    @Test
+    public void testDeleteArticle() {
+        doNothing().when(articleRepository).deleteById(any(Long.class));
+        articleService.deleteArticle(any(Long.class));
+        verify(articleRepository).deleteById(any(Long.class));
+    }
+
+    @Test
+    public void testGetArticleById() {
+        Article article = new Article();
+        when(articleRepository.findById(any(Long.class))).thenReturn(Optional.of(article));
+        Article result = articleService.getArticleById(any(Long.class));
+        assertEquals(article, result);
+    }
+
+    @Test
+    public void testCreateArticle() {
+        Article article = new Article();
+        articleService.createArticle(article);
+        verify(articleRepository).save(article);
+    }
+
+    @Test
+    public void testUpdateArticle() {
+        Article existingArticle = new Article();
+        existingArticle.setId(1L);
+        existingArticle.setTitle("Old Title");
+        existingArticle.setContent("Old Content");
+
+        Article updatedArticle = new Article();
+        updatedArticle.setId(1L);
+        updatedArticle.setTitle("New Title");
+        updatedArticle.setContent("New Content");
+
+        when(articleRepository.findById(any(Long.class))).thenReturn(Optional.of(existingArticle));
+        articleService.updateArticle(1L, updatedArticle);
+        verify(articleRepository).save(existingArticle);
+        assertEquals("New Title", existingArticle.getTitle());
+        assertEquals("New Content", existingArticle.getContent());
+    }
+
 }

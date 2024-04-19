@@ -17,7 +17,18 @@ public class Article {
 
     private String tags;
 
+    private String content;
+
     private String createdAt;
+
+    public Article(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public Article() {
+
+    }
 
     public Long getId() {
         return id;
@@ -59,5 +70,12 @@ public class Article {
         this.createdAt = createdAt;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
 

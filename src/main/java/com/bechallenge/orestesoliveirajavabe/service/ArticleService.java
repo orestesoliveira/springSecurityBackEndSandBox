@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -46,4 +47,23 @@ public class ArticleService {
     public void deleteArticle(Long id) {
         articleRepository.deleteById(id);
     }
+
+    public Article getArticleById(Long id) {
+        return articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found with id: " + id));
+    }
+
+    public void createArticle(Article article) {
+        articleRepository.save(article);
+    }
+
+    public void updateArticle(Long id, Article article) {
+        Article existingArticle = articleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Article not found with id: " + id));
+        existingArticle.setTitle(article.getTitle());
+        existingArticle.setContent(article.getContent());
+        articleRepository.save(existingArticle);
+    }
+
+
 }
